@@ -1,0 +1,107 @@
+//Lane Valenzuela
+//06/03/012
+//Lab04 - String Lab
+/*
+Create a program requesting a users name. 
+ex: Lane Valenzuela
+1 - Find out the length of the users name ex: 15
+2 - Reverse the users name ex: aleuznelav enal
+3 - Find the whitespace within the users name ex: 4
+4 - Place the first name behind the last name ex: Valenzuela, Lane.
+*/
+#include <stdio.h>
+#include <string.h>
+ 
+#define SIZE 1024
+
+int nameLength(const char* userName);
+void nameReverse(const char * const userNaPtr);
+int spaceNumber(const char* userName, int returnLength);
+
+
+int main(void)
+{
+  char userName[SIZE], lenStrName[SIZE], revStrName[SIZE], spcStrName[SIZE], flpStrName[SIZE];
+	int returnLength = 0, spaceNum, nameLen;
+
+	
+	printf("Please enter your first and last name: ");
+	fgets(userName, SIZE, stdin);
+	nameLen = strlen(userName);
+
+	
+	//Keeping variable userName fresh for any future manipulation 
+	//////////////////////////////////////////////////////////////////////////////////
+	memcpy(lenStrName, userName, SIZE); //Used in Part 2
+	memcpy(revStrName, userName, SIZE); //Used in Part 3
+	memcpy(spcStrName, userName, SIZE); //Used in Part 4
+	memcpy(flpStrName, userName, SIZE); //Used in Part 5
+	//////////////////////////////////////////////////////////////////////////////////
+ 	
+
+ 	//Part 2 Finding the length of the given string by user
+ 	//////////////////////////////////////////////////////////////////////////////////
+ 	returnLength = nameLength(lenStrName); 
+	if(returnLength && lenStrName[returnLength-1] == '\n') {
+		lenStrName[returnLength-1] = 0;
+	}
+	returnLength = nameLength(lenStrName);
+	printf("\nLength of your name is:\n %d", returnLength);
+	//////////////////////////////////////////////////////////////////////////////////
+
+	
+	//Part 3 Reversing the string
+	//////////////////////////////////////////////////////////////////////////////////
+	printf("\n\nThis is your name reversed: ");
+	nameReverse(revStrName);
+	//////////////////////////////////////////////////////////////////////////////////
+
+	
+	//Part 4 Find the space within the array and return the placement
+	//////////////////////////////////////////////////////////////////////////////////
+	spaceNum = spaceNumber(spcStrName, returnLength);
+	printf("\n\nLocation of the space within your name:\n %d\n", spaceNum);
+	//////////////////////////////////////////////////////////////////////////////////
+
+	
+	//Part 5 Reverse order of name Example: Lane Valenzuela to Valenzuela, Lane
+	//////////////////////////////////////////////////////////////////////////////////
+	flpStrName[strcspn(flpStrName, "\n")] = '\0';
+	char *firstname = strtok( flpStrName, " " );
+ 	char *lastname = strtok( NULL, " " );
+  	printf("\nNow your name is reverse order:\n%s, %s", lastname, firstname);
+  	//////////////////////////////////////////////////////////////////////////////////
+
+  	return 0;
+}
+
+
+//Function to return length of user name Part 2
+int nameLength(const char* userName){
+	const char* p = userName;
+	while( *p ) ++p;
+	return p - userName;
+}
+
+//Function reverses the string Part 3
+void nameReverse(const char * const userNaPtr){
+	if(userNaPtr[0] == '\0'){
+		return;
+	}
+	else
+	{
+		nameReverse( &userNaPtr[1]);
+		putchar( userNaPtr[0] );
+	}
+}
+
+//Find the space in the array and return its element number Part 4
+int spaceNumber(const char* userName, int returnLength){
+	int i;
+
+	for(i = 0; i < returnLength; ++i){
+		if(userName[i] == ' ')
+			return i;
+	}
+	
+}
