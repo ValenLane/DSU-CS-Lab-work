@@ -1,0 +1,85 @@
+#include <stdio.h>  
+#include <stdlib.h>
+
+/*First attempt at making a simple game*/
+
+
+int main(){
+
+	int menuC, pAgain, playerR, aiR, playerC;										/*Declared variables line 7*/
+	int gameOn = 1;
+	int playerH = 100, aiH = 100;
+	int pSwing = 20, aSwing = 25;
+	int pJab = 45, aJab = 40;
+	int pBlock = 30;													            
+	
+	printf(	"\n\n\n\n\nHuman vs Orc game"											/*Main menu with information on attack values*/
+			"\n_____________________________________________________________\n"		/*with do-while loop giving the user attack choice*/
+			"|Swing Damage: 20                                            |\n"		
+			"|Jab Damage: 40                                              |\n"
+			"|Block heals player for 30 if successfull                    |\n"
+			"|Orc has same damage output as you but is unable to heal     |\n"
+			"|but there is a chance that the orc can strike through       |\n"
+			"|your block causing you not to heal and take damage.         |\n"	  
+			"|____________________________________________________________|\n");
+	do{
+		printf("\n\n"
+		"Here are your attack choices:\n"
+		"1 - Swing Attack\n"
+		"2 - Jab Attack\n"
+		"3 - Block\n");
+		printf("--> ");
+		scanf("%d", &playerC);														
+		if(playerC == 1){															/*Start of the swing attack using if statement = line 31*/			
+			playerR = rand()%100;													/*Random value generated with max value of 100 for player*/		
+			aiR = rand()%100;														/*Random value generated with max value of 100 for ai*/
+			if(playerR > aiR){														/*If player gets a higher value then ai it wins the attack*/
+				aiH = aiH - pSwing;
+			}
+			else if(playerR < aiR){													/*If ai gets a higher value then player it wins the attack*/
+				playerH = playerH - aSwing;
+			}
+			else if(playerR == aiR){												/*If both get equal value they each get hit*/
+				playerH = playerH - aSwing;
+				aiH = aiH - pSwing;
+			}
+		}																			
+		if(playerC == 2){															/*Start of the jab attack using if statement = line 45**/
+			playerR = rand()%100;													/*Random value generated with max value of 100 for player*/
+			aiR = rand()%100;														/*Random value generated with max value of 100 for ai*/
+			if(playerR > aiR){														/*If player gets a higher value then ai it wins the attack*/
+				aiH = aiH - pJab;
+			}
+			else if(playerR < aiR){													/*If ai gets a higher value then player it wins the attack*/
+				playerH = playerH - aJab;
+			}
+			else if(playerR == aiR){												/*If both get equal value they each get hit*/
+				playerH = playerH - aJab;
+				aiH = aiH - pJab;
+			}
+		}																			
+		if(playerC == 3){															
+			playerR = rand()%100;													/*Random value generated with max value of 100 for player*/
+			aiR = rand()%40;														/*Random value generated with max value of 100 for ai*/
+			if(playerR >= aiR){														/*If players value is equal or greater it will have blocked the attack*/
+				playerH = playerH + pBlock;											/*Block causes the player to heal*/
+			}
+			else if(playerR < aiR){													/*If ai gets higher value then the block fails*/
+				playerH = playerH - aJab;
+			}
+		}																			
+		printf("\n\nPlayer life: %d", playerH);										/*Displays player's current health*/
+		printf("\nAI life %6d", aiH);												/*Displays ai's current health*/
+		if(playerH <= 0){															/*If player's health is equal to or less then 0 player loss*/
+			printf("\n\nAI won\n"
+			"GAME OVER\n");
+			gameOn = 0;
+		}
+		if(aiH <= 0){																/*If ai's health is equal to or less then 0 ai loss*/
+			printf("\n\nPlayer won\n"
+			"GAME OVER\n");
+			gameOn = 0;																/*Sets the loop to 0*/
+		}
+	}																				
+	while(gameOn == 1);																/*While loop kept active with 1*/
+}																					/*End of main function*/
