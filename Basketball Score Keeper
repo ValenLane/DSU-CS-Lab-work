@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+
+/*Basketball Score Keeping Program*/
+
+int main(void){
+  /*variables*/
+	int gameOn = 1;
+	int teamCh;
+	int teamOne = 0;
+	int teamTwo = 0;
+	
+	do{
+		int pts;
+		
+		printf("__________________________________");
+		printf("\nThis is a score keeper program\n"
+		"where you will select a team and then\n"
+		"enter the points they made 1,2, or 3\n");
+	
+		printf("\nDid team 1 or team 2 score(Enter 1, 2, or -999 to quit): ");
+		scanf("%d", &teamCh);
+		
+		if(teamCh == 1){
+			
+				
+			printf("\nHow many points did they score?(1, 2, 3): ");
+			scanf("%d", &pts );
+				
+			teamOne = pts + teamOne;
+			
+		}
+		if(teamCh == 2){
+		
+			printf("\nHow many points did they score?(1, 2, 3): ");
+			scanf("%d", &pts );
+				
+			teamTwo = pts + teamTwo;
+		
+		}
+		
+		printf("\n%s%8s", "Team 1", "Team 2");
+		printf("\n%4d%8d\n", teamOne, teamTwo);
+		
+		if (teamCh == -999){
+			gameOn = 0;
+			if(teamOne < teamTwo){
+				printf("\nTeam 2 won");
+			}
+			if(teamOne > teamTwo){
+				printf("\nTeam 1 won");
+			}
+			if(teamOne == teamTwo){
+				printf("\nThe game is a tie");
+			}
+			printf("\n\n->GAME OVER<-\n");
+		
+		}
+	}
+	while(gameOn == 1);
+	
+	return 0;
+	
+}
