@@ -1,0 +1,87 @@
+//CSC250 Lab 03
+//5/21/2013
+//Lane Valenzuela #7198171
+/*
+Use Pointer to pass-by reference.
+/*
+#include <stdio.h>
+
+
+void addTen(int *number);
+void divideByTwelve(int *number);
+void subtractSixteen(int *number);
+void multiplyByEleven(int *number);
+
+int main()
+{
+  int programOn = 1;
+	int numberChoice = 0; 
+
+	printf("Select a number: ");
+	scanf("%d", &numberChoice);
+	
+    // loop on = 1, off = 0.
+	do{ 
+
+		int menuChoice = 0;
+
+		printf("What would you like to do with %d?\n"
+			   "1 - Add by ten\n"
+			   "2 - Divide by twelve\n"
+			   "3 - Subtract by sixteen\n"
+			   "4 - Multiply by eleven\n"
+			   "5 - Exit program\n"
+			   "------------------------\n"
+			   "--> ", numberChoice);
+		scanf("%d", &menuChoice);
+
+		switch(menuChoice)
+		{
+            //pass-by reference set              
+			case 1:
+				addTen(&numberChoice); 
+				break;
+			case 2:
+				divideByTwelve(&numberChoice);
+				break;
+			case 3:
+				subtractSixteen(&numberChoice);
+				break;
+			case 4:
+				multiplyByEleven(&numberChoice);
+				break;
+			case 5:
+				programOn = 0;
+		}
+		
+        // Final output after menu choice has been selected.
+		printf("Your answer is %d", numberChoice);
+		printf("\n\n");
+
+
+	}while(programOn == 1);
+
+	return 0;
+
+}
+
+//Functions using pass-by reference
+void addTen(int *number)
+{
+	*number = *number + 10;
+}
+
+void divideByTwelve(int *number)
+{
+	*number = *number / 12;
+}
+
+void subtractSixteen(int *number)
+{
+	*number = *number - 16;
+}
+
+void multiplyByEleven(int *number)
+{
+	*number = *number * 11;
+}
