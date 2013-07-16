@@ -1,0 +1,86 @@
+//Lab06
+//Dynamic Memory Allocation
+//Lane Valenzuela CSC250
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+
+  int hwMnStuEntry, x, i;
+
+	//User input on how many students to add
+	printf("How many students would you like to enter: ");
+	scanf("%d", &hwMnStuEntry);
+
+	//Structure sInfo.
+	typedef struct {
+		int id;
+		int phNum;
+		int month;
+		int day;
+		int year;
+	}sInfo;
+
+	//Allocating memory to struct_Ptr.
+	sInfo *struct_Ptr = malloc(hwMnStuEntry*sizeof(*struct_Ptr));
+
+	//for-loop to add student information.
+ 	for(i = 0; i <= hwMnStuEntry-1; i++) {
+ 		printf("Please enter a student ID #: ");
+ 		scanf("%d", &struct_Ptr[i].id);
+ 		printf("Please enter student phone number without '-': ");
+ 		scanf("%d", &struct_Ptr[i].phNum);
+ 		printf("Please enter student birth date:\n");
+ 		printf("Month: ");
+ 		scanf("%d", &struct_Ptr[i].month);
+ 		printf("Day: ");
+ 		scanf("%d", &struct_Ptr[i].day);
+ 		printf("Year: ");
+ 		scanf("%d", &struct_Ptr[i].year);
+	}
+
+	//Output user information.
+	printf("Information you entered:");
+	for( x = 0; x <= hwMnStuEntry-1; x++)
+		printf("\n-------------------\nID:%8d    \nPhone:%5d     \nDOB:%7d-%d-%d",
+			struct_Ptr[x].id, struct_Ptr[x].phNum, struct_Ptr[x].month, struct_Ptr[x].day, struct_Ptr[x].year);
+	printf("\n-------------------\n");
+
+
+	/*
+	Find the oldest student by year using a if-statement
+	*/
+	int oldestID;
+	int holdYear = struct_Ptr[0].year;
+	int holdMonth = struct_Ptr[0].month;
+	int holdDay = struct_Ptr[0].day;
+	
+
+	//Finds the oldest year.
+	for ( i = 1; i < hwMnStuEntry; i++) {
+		if((struct_Ptr[i].year < holdYear) ||
+			(struct_Ptr[i].year == holdYear) && (struct_Ptr[i].month < holdMonth) ||
+			(struct_Ptr[i].year == holdYear) && (struct_Ptr[i].month == holdMonth) && (struct_Ptr[i].day < holdDay)) {
+        	                    
+			holdYear = struct_Ptr[i].year;
+			holdDay = struct_Ptr[i].day;
+			holdMonth = struct_Ptr[i].month;
+		}
+	}
+		
+	//Displays the oldest student
+	for(i = 0; i < hwMnStuEntry; i++)
+		if(holdYear == struct_Ptr[i].year) {
+			printf("\n\nStudent with ID# %d is the oldest.\n", struct_Ptr[i].id);
+		}
+
+	
+
+    //Free saved memory.
+	free(struct_Ptr);
+
+	return 0;
+
+}
+
