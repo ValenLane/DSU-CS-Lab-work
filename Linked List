@@ -1,0 +1,140 @@
+//Lab07
+//Linked List Add and Search.
+//Lane Valenzuela CSC250
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct bdate {
+   int dateOfBirth;
+};
+
+struct stuInfo {
+   int id;
+   int phNum;
+   struct bdate dob;
+   struct stuInfo *next;
+};
+
+typedef struct stuInfo *stuInfoPtr;
+
+
+//Function calls
+void userMenu(void);
+void enterStuRecord( stuInfoPtr *sPtr, int ids, int ph, int dDob);
+void searchStudent(stuInfoPtr curPtr, int shId); 
+
+int main(void)
+{
+   
+   stuInfoPtr startPtr = NULL;
+   
+   int stuID, // Used in case 1
+       stuPH, // used in case 1
+       stuDob, //used in case1
+       searchStu, //used in case 2
+       option, //users menu choice for switch-statements
+       progOn = 1;
+
+   do {
+      userMenu(); //Displays users options
+      printf("-->");
+      scanf("%d", &option);
+
+      switch(option) {
+
+         case 1:
+
+            printf("\nEnter student ID #:");
+            scanf("%d", &stuID);
+
+            printf("Enter student PH #:");
+            scanf("%d", &stuPH);
+
+            printf("Enter student DOB mmddyyyy #:");
+            scanf("%d", &stuDob);
+
+            enterStuRecord(&startPtr, stuID, stuPH, stuDob);
+            break;
+         case 2:
+
+            printf("Enter student ID you would like to view: ");
+            scanf("%d", &searchStu);
+
+            searchStudent(startPtr, searchStu); 
+            break;
+         case 3:
+            progOn = 0;
+            break;
+      }
+   }while(progOn == 1);
+
+   return 0;
+}
+
+void userMenu(void)
+{
+   printf("\nSelect your option:\n");
+   printf("1 - Insert student record.\n");
+   printf("2 - Search student record.\n");
+   printf("3 - Exit.\n")
+}
+
+void enterStuRecord( stuInfoPtr *sPtr, int ids, int ph, int dDob)
+{
+   stuInfoPtr newPtr;
+   stuInfoPtr prevPtr;
+   stuInfoPtr curPtr;
+
+   newPtr = (struct stuInfo*) malloc(sizeof(struct stuInfo));
+
+   if( newPtr != NULL) {
+      newPtr->id = ids;
+      newPtr->phNum = ph;
+      newPtr->dob.dateOfBirth = dDob;
+      newPtr->next = NULL;
+
+      prevPtr = NULL;
+      curPtr = *sPtr;
+
+      while( curPtr != NULL && ids > curPtr->id && ph > curPtr->phNum) {
+         prevPtr = curPtr;
+         curPtr = curPtr->next;
+      }
+
+      if(prevPtr == NULL){
+         newPtr->next = *sPtr;
+         *sPtr = newPtr;
+      }
+      else {
+         prevPtr->next = newPtr;
+         newPtr->next = curPtr;
+      }
+   }
+   else {
+      printf("\nNo memory available to insert %d , %d , and %d ", ids, ph, dDob);
+   }
+}
+
+void searchStudent(stuInfoPtr curPtr, int shId) 
+{
+   if(curPtr == NULL) {
+      printf("You have nothing in the list.");
+   }
+   else {
+      printf("Student Record is: ");
+      printf("\n-------------------\n");
+
+      while(curPtr != NULL) {
+         if(curPtr->id == shId){   
+            printf("\nStudent ID: %d \nPH #: %d \nDoB: %d \n\n", curPtr->id, curPtr->phNum, curPtr->dob.dateOfBirth);
+            break;
+         }
+         else {
+            curPtr = curPtr->next;
+         }
+         
+      }
+
+   }
+}
