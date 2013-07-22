@@ -1,0 +1,189 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct numStruct {
+  int number;
+	struct numStruct *nextPtr;
+};
+
+typedef struct numStruct NumStruck;
+typedef NumStruck *NumStruckPtr;
+
+//Function calls
+void menu(void);
+void push(NumStruckPtr *topPtr, int info); //1
+int peek(NumStruckPtr *topPtr); //2
+int pop(NumStruckPtr *topPtr); //3
+void returnLoop(NumStruckPtr *topPtr); //4
+void filePrint(NumStruckPtr *topPtr); //5
+void printStack(NumStruckPtr curPtr);//1
+int isEmpty(NumStruckPtr topPtr);//3 & 4
+
+int main(void)
+{
+	NumStruckPtr stackPtr = NULL;
+	int choice, // 
+		value, // used in case 1
+		i; // used in case 4
+	int oneTho = 100000, // used in case 4
+		zeroN = 0; // used in case 4
+	
+	while (choice != 6) {
+		menu();
+		printf("\n--> ");
+		scanf("%d", &choice);
+
+		switch( choice ) {
+			//Pop function adds number to the top
+			case 1:
+				
+				printf("\nEnter a number: ");
+				scanf("%d", &value);
+				push(&stackPtr, value);
+				printf("\n");
+				printStack(stackPtr); //View stack after number input
+				printf("\n");
+				break;
+			//Peek function allows you to view the number on top
+			case 2:
+
+				printf("\n\n%d is at the top of the stack.\n\n", peek(&stackPtr));
+				break;
+			//Pop function removes number from the top
+			case 3:
+
+				if(!isEmpty(stackPtr)){
+					printf("\n\n%d has been removed.\n\n", pop(&stackPtr));
+				}
+				break;
+			//Adds 100,000 to the stack then displays it being removed
+			case 4:
+
+				for(i = zeroN; i <= oneTho; i++){
+					push(&stackPtr, i);
+				}
+				for(i = oneTho; i >= zeroN; i--) {
+					if(!isEmpty(stackPtr)){
+						printf("%d\n", pop(&stackPtr));
+					}
+				}
+			//creates a text file called stackss.txt and inputs 1 - 100,000 into it
+			case 5:
+				filePrint(&stackPtr);
+				break;
+		}	
+	}
+}
+
+//Users main menu
+void menu(void)
+{
+	printf("\n1 - Enter a number into stack.");
+	printf("\n2 - Look at the top number in the stack.");
+	printf("\n3 - Remove the last number in stack.");
+	printf("\n4 - Loop 100,000 into stack and then pop each one off.");
+	printf("\n5 - Enter 1 - 100,000 into a text file.");
+	printf("\n6 - Exit.");
+
+}
+
+
+//Case 1
+void push(NumStruckPtr *topPtr, int info)
+{
+	NumStruckPtr newPtr;
+	
+	newPtr = malloc(sizeof(NumStruck));
+	
+	
+	if(newPtr != NULL) {
+		newPtr->number = info;
+		newPtr->nextPtr = *topPtr;
+		*topPtr = newPtr;
+	}
+	else {
+		printf("%d not inserted. No memory available.");
+	}
+}
+
+//Case 2
+int peek(NumStruckPtr *topPtr)
+{
+	NumStruckPtr tempPtr;
+	int popValue;
+	
+	tempPtr = *topPtr;
+	popValue = (*topPtr)->number;
+	
+	return popValue;
+}
+
+//Case 3
+int pop(NumStruckPtr *topPtr)
+{
+	NumStruckPtr tempPtr;
+	int popValue;
+	
+	tempPtr = *topPtr;
+	popValue = (*topPtr)->number;
+	*topPtr = (*topPtr)->nextPtr;
+	free(tempPtr);
+	
+	return popValue;
+}
+
+//Case 4
+void returnLoop(NumStruckPtr *topPtr)
+{
+	NumStruckPtr tempPtr;
+	int popValue, i;
+	
+	
+	for(i = 100000; i >= 0; i--){
+		tempPtr = *topPtr;
+		popValue = (*topPtr)->number;
+		*topPtr = (*topPtr)->nextPtr;
+		free(tempPtr);
+		printf("%d", popValue);
+	}
+}
+
+//Case 5
+void filePrint(NumStruckPtr *topPtr)
+{
+	FILE *stacksPtr;
+	int i,
+		oneTho = 100000;
+
+	if((stacksPtr = fopen ( "stackss.txt", "w+")) == NULL ) {
+		printf("File could not be opened.");
+	}
+	else {
+		for(i = 0; i <= oneTho; i++) {
+			fprintf( stacksPtr, "%d ", i);
+		}
+		fclose( stacksPtr );
+	}
+}
+
+//Used in Case 1
+void printStack(NumStruckPtr curPtr)
+{
+	if(curPtr == NULL) {
+		printf("\nThe stack is currently empty.\n");
+	}
+	else {
+		printf("The stack is: ");
+		
+		while (curPtr != NULL) {
+			printf("\n [%d] ", curPtr->number);
+			curPtr = curPtr->nextPtr;
+		}
+	}
+}
+
+//Used in Case 3 & 4
+int isEmpty(NumStruckPtr topPtr)
+{
+	return topPtr == NULL;
+}
