@@ -77,7 +77,7 @@ void userMenu(void)
    printf("\nSelect your option:\n");
    printf("1 - Insert student record.\n");
    printf("2 - Search student record.\n");
-   printf("3 - Exit.\n")
+   printf("3 - Exit.\n");
 }
 
 void enterStuRecord( stuInfoPtr *sPtr, int ids, int ph, int dDob)
