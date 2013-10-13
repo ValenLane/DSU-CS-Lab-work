@@ -1,0 +1,86 @@
+/*
+	Calculator program with the use of classes 
+	Grab user input and then ask which mathematical operator
+	to use and then display.
+*/
+
+#include <iostream>
+using namespace std;
+
+class calculator
+{
+public:
+	void input();
+	void output();
+	void setNum(int n1, int n2);
+	
+private:
+	int numb1;
+	int numb2;
+
+};
+
+int main(void)
+{
+	calculator calc;
+	
+	calc.input();
+	calc.output();
+	
+	return 0;
+}
+
+
+void calculator::input()
+{
+	cout << "Hello and welcome to calculator classes."
+		 << "\nNow go ahead and enter in the first number"
+		 << "\n--> ";
+	cin >> numb1;
+	
+	cout << "Enter the second number"
+		 << "\n--> ";
+	cin >> numb2;
+}
+
+void calculator::setNum(int n1, int n2)
+{
+	numb1 = n1;
+	numb2 = n2;
+
+}
+
+void calculator::output()
+{
+	int option,
+		answer;
+		
+	cout << "Which mathematical operator do you want to do?\n"
+		 << "1 - addition\n"
+		 << "2 - subtraction\n"
+		 << "3 - division\n"
+		 << "4 - multiplication\n"
+		 << "Answer: ";
+	cin >> option;
+	
+	if(option == 1)
+	{
+		answer = numb1 + numb2;
+		cout << answer;
+	}
+	if(option == 2)
+	{
+		answer = numb1 - numb2;
+		cout << answer;
+	}
+	if(option == 3)
+	{
+		answer = numb1 / numb2;
+		cout << answer;
+	}
+	if(option == 4)
+	{
+		answer = numb1 * numb2;
+		cout << answer;
+	}
+}
