@@ -1,0 +1,168 @@
+#include <iostream>
+
+using namespace std;
+
+const bool TRACE = false;
+
+class OWNER
+{
+public:
+	//constructor & deconstructor
+	OWNER(int own);
+	OWNER(int own, int dog);
+	~OWNER();
+	
+	//accessor methods
+	int get_owner();
+	void set_dog(int dog);
+	int get_dog();
+
+private:
+	//member variables
+	int id;
+	int dog_id;
+};
+//==============================================
+class DOG
+{
+public:
+	//constructors & deconstructor
+	DOG(int d_tag);
+	~DOG();
+
+	//accessor methods
+	int get_dog();
+	void set_dog(int d_tag);
+	int get_owner();
+	void set_owner(int own);
+	
+private:
+	//member variables
+	int id;
+	int owner_id;
+};
+//==============================================
+//OWNER MEMBER FUNCTIONS
+//==============================================
+OWNER::OWNER(int own = 0)
+{	
+	id = own;
+	dog_id = 0;
+	if(TRACE) cout << "OWNER Constructor" << endl;
+}
+//==============================================
+OWNER::OWNER(int own, int dog)
+:id(own), dog_id(dog)
+{
+	if(TRACE) cout << "OWNER Constructor" << endl;
+}
+//==============================================
+OWNER::~OWNER()
+{
+	if(TRACE) cout << "OWNER Deconstructor" << endl;
+}
+//==============================================
+int OWNER::get_owner()
+{
+	if(TRACE) cout << "--get_owner" << endl;
+	return id;
+}
+//==============================================
+void OWNER::set_dog(int dog)
+{
+	if(TRACE) cout << "--set_dog" << endl;
+	dog_id = dog;
+}
+//==============================================
+int OWNER::get_dog()
+{
+	if(TRACE) cout << "--get_dog" << endl;
+	return dog_id;
+}
+//==============================================
+//DOG MEMBER FUNCTIONS
+//==============================================
+DOG::DOG(int d_tag = 0)
+:id(d_tag)
+{
+	owner_id = 0;
+	if(TRACE) cout << "DOG Constructor" << endl;
+}
+//==============================================
+DOG::~DOG()
+{
+	if(TRACE) cout << "DOG Deconstructor" << endl;
+}
+//==============================================
+void DOG::set_dog(int d_tag)
+{
+	if(TRACE) cout << "--set_dog" << endl;
+	id = d_tag;
+}
+//==============================================
+int DOG::get_dog()
+{
+	if(TRACE) cout << "--get_dog" << endl;
+	return id;
+}
+//==============================================
+void DOG::set_owner(int own)
+{
+	if(TRACE) cout << "--set_owner" << endl;
+	owner_id = own;
+}
+//==============================================
+int DOG::get_owner()
+{
+	if(TRACE) cout << "--get_owner" << endl;
+	return owner_id;
+}
+//==============================================
+
+int main(void)
+{
+	cout << "===============================" << endl;
+	cout << "   Lane Valenzuela " << endl;
+	cout << "===============================" << endl << endl;
+	OWNER o1;
+	OWNER o2(2);
+	OWNER o3(3,33);
+ 
+	DOG d1;
+	DOG d2(22);
+	DOG d3(33);
+	cout << endl << "====== 1 =======" << endl;
+ 
+	o2.set_dog(22);
+	d1.set_dog(11);
+	d3.set_owner(3);
+	d2.set_owner(2);
+	cout << endl << "====== 2 =======" << endl; 
+ 
+	int owner;
+	int dog;
+	owner = o1.get_owner();
+	dog = o1.get_dog();
+	cout << "Owner ID: " << owner << "  owns dog " << dog << endl;
+	owner = o2.get_owner();
+	dog = o2.get_dog();
+	cout << "Owner ID: " << owner << "  owns dog " << dog << endl;
+	owner = o3.get_owner();
+	dog = o3.get_dog();
+	cout << "Owner ID: " << owner << "  owns dog " << dog << endl;
+	cout << endl << "====== 3 =======" << endl;
+ 
+	owner = d1.get_owner();
+	dog = d1.get_dog();
+	cout << "DOG ID: " << dog << "  has owner " << owner << endl;
+	owner = d2.get_owner();
+	dog = d2.get_dog();
+	cout << "DOG ID: " << dog << "  has owner " << owner << endl;
+	owner = d3.get_owner();
+	dog = d3.get_dog();
+	cout << "DOG ID: " << dog << "  has owner " << owner << endl;
+ 
+ 
+	cout << endl << " === ENDING PROGRAM ===" << endl;
+
+}
