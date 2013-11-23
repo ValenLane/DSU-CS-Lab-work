@@ -1,0 +1,72 @@
+//==========================================
+// Lane Valenzuela
+// 11/19/2013
+// Assignment #4 Inheritance
+// CSC 260 Fall 2013
+//==========================================
+
+#include <iostream>
+
+using namespace std;
+
+class SHAPE
+{
+public:
+	SHAPE(void) {width = height = depth = -99;}
+	SHAPE(const int w, const int h, const int d)
+	{
+		width = w;
+		height = h;
+		depth = d;
+	}
+public:
+	int get_width(void) {return width;}
+	int get_height(void) {return height;}
+	int get_depth(void) {return depth;}
+	int print_space(void) 
+	{
+		cout << "Space is = " << space() << endl;
+	}
+private:
+	virtual int space(void) = 0;
+	int width;
+	int height;
+	int depth;
+};
+//*********************************
+// SQUARE Inheritance of SHAPE
+class SQUARE : public SHAPE
+{
+private:
+	int space(void){ return get_width() * get_height(); }
+public:
+	SQUARE(void){};
+	SQUARE(const int side):SHAPE(side,side,-1){}
+};
+//*********************************
+// QUBE Inheritance of SHAPE
+class CUBE : public SHAPE
+{
+private:
+	int space(void){ return get_width() * get_height() * get_depth(); }
+public:
+	CUBE(void){};
+	CUBE(const int side):SHAPE(side, side, side){}
+};
+//***********************************************
+// Main
+
+
+int main(void)
+{
+cout << "Lane Valenzuela" << endl;
+SQUARE s1(2);
+CUBE c1(2);
+s1.print_space();// should print 4
+c1.print_space();// should print 8
+SQUARE s2;
+s2.print_space();// {should print-99 *-99 so 9801 }
+CUBE c2;
+c2.print_space();// {should print-99 *-99 *-99 so-970299 }
+return 0;
+}
